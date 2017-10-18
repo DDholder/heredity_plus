@@ -63,9 +63,29 @@ namespace heredity_plus.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap _1933170_icon {
+            get {
+                object obj = ResourceManager.GetObject("1933170_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap e73676d96efbbd0dc141b9793c111ecf {
             get {
                 object obj = ResourceManager.GetObject("e73676d96efbbd0dc141b9793c111ecf", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap gun_game_first_kill {
+            get {
+                object obj = ResourceManager.GetObject("gun_game_first_kill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -87,5 +87,11 @@
   <ItemGroup>
     <None Include="Resources\e73676d96efbbd0dc141b9793c111ecf.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gun_game_first_kill.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1933170_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
