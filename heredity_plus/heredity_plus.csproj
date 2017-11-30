@@ -93,5 +93,23 @@
   <ItemGroup>
     <None Include="Resources\1933170_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cbdf6f15e14b6aa5a3e667d9a106029a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\d1159d1a4d0e18da4d74f85dbb4934d7a92ace2b.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\git-for-windows.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Google Profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\steam_tray.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -39,7 +39,7 @@ namespace heredity_plus.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("heredity_plus.Properties.Resources", typeof(Resources).Assembly);
+                    var temp = new global::System.Resources.ResourceManager("heredity_plus.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,7 +65,37 @@ namespace heredity_plus.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap _1933170_icon {
             get {
-                object obj = ResourceManager.GetObject("1933170_icon", resourceCulture);
+                var obj = ResourceManager.GetObject("1933170_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap _22 {
+            get {
+                var obj = ResourceManager.GetObject("22", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap cbdf6f15e14b6aa5a3e667d9a106029a {
+            get {
+                var obj = ResourceManager.GetObject("cbdf6f15e14b6aa5a3e667d9a106029a", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap d1159d1a4d0e18da4d74f85dbb4934d7a92ace2b {
+            get {
+                var obj = ResourceManager.GetObject("d1159d1a4d0e18da4d74f85dbb4934d7a92ace2b", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -75,7 +105,27 @@ namespace heredity_plus.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap e73676d96efbbd0dc141b9793c111ecf {
             get {
-                object obj = ResourceManager.GetObject("e73676d96efbbd0dc141b9793c111ecf", resourceCulture);
+                var obj = ResourceManager.GetObject("e73676d96efbbd0dc141b9793c111ecf", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap git_for_windows {
+            get {
+                var obj = ResourceManager.GetObject("git-for-windows", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Google_Profile {
+            get {
+                var obj = ResourceManager.GetObject("Google Profile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -85,7 +135,17 @@ namespace heredity_plus.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap gun_game_first_kill {
             get {
-                object obj = ResourceManager.GetObject("gun_game_first_kill", resourceCulture);
+                var obj = ResourceManager.GetObject("gun_game_first_kill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap steam_tray {
+            get {
+                var obj = ResourceManager.GetObject("steam_tray", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,7 +155,7 @@ namespace heredity_plus.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap white {
             get {
-                object obj = ResourceManager.GetObject("white", resourceCulture);
+                var obj = ResourceManager.GetObject("white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

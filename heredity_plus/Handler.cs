@@ -2,84 +2,87 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace heredity_plus
 {
-    class Triangle
+    internal class Triangle
     {
-        public Point[] pols;
-        public Brush bsh;
+        public Point[] Pols;
+        public Brush Bsh;
         public Triangle(Brush b, Point[] ps)
         {
-            pols = ps;
-            bsh = b;
+            Pols = ps;
+            Bsh = b;
         }
     }
-    struct Member
+
+    internal struct Member
     {
-        public Triangle[] tri;
-        public Bitmap bmp;
-        public float grade;
+        public Triangle[] Tri;
+        public Bitmap Bmp;
+        public float Grade;
     }
-    struct Target
+
+    internal struct Target
     {
         public int R;
         public int G;
         public int B;
     }
-    class Handler
+
+    internal class Handler
     {
-        Color col = Color.White;
-        Point[] pp = new Point[3];
-        Random rans = new Random();
-        private static readonly object obj = new object();
-        private static readonly object obj2 = new object();
+        private Color _col = Color.White;
+        private readonly Point[] _pp = new Point[3];
+        private readonly Random _rans = new Random();
+        private static readonly object Obj = new object();
+
         public Triangle DrawAnyTriangle()
         {
-            int top0 = rans.Next(0, 64);
-            int top1 = rans.Next(0, 64);
-            int top2 = rans.Next(0, 64);
-            int top3 = rans.Next(0, 64);
-            int top4 = rans.Next(0, 64);
-            int top5 = rans.Next(0, 64);
-            pp[0] = new Point(top0, top3);
-            pp[1] = new Point(top1, top4);
-            pp[2] = new Point(top2, top5);
-            int A = rans.Next(0, 50);
-            int R = rans.Next(0, 255);
-            int G = rans.Next(0, 255);
-            int B = rans.Next(0, 255);
-            col = Color.FromArgb(A, R, G, B);
-            return new Triangle(new SolidBrush(col), new Point[] { new Point(top0, top3), new Point(top1, top2), new Point(top4, top5) });
+            var top0 = _rans.Next(0, 64);
+            var top1 = _rans.Next(0, 64);
+            var top2 = _rans.Next(0, 64);
+            var top3 = _rans.Next(0, 64);
+            var top4 = _rans.Next(0, 64);
+            var top5 = _rans.Next(0, 64);
+            _pp[0] = new Point(top0, top3);
+            _pp[1] = new Point(top1, top4);
+            _pp[2] = new Point(top2, top5);
+            var a = _rans.Next(0, 50);
+            var r = _rans.Next(0, 255);
+            var g = _rans.Next(0, 255);
+            var b = _rans.Next(0, 255);
+            _col = Color.FromArgb(a, r, g, b);
+            return new Triangle(new SolidBrush(_col), new[] { new Point(top0, top3), new Point(top1, top2), new Point(top4, top5) });
         }
         private float GetAbs(int firstNum, int secondNum)
         {
-            float abs = Math.Abs((float)firstNum - (float)secondNum);
+            var abs = Math.Abs(firstNum - (float)secondNum);
             float result = Math.Max(firstNum, secondNum);
-            if (result == 0)
+            if (Math.Abs(result) < 0.01)
                 result = 1;
             return abs / result;
         }
         public int[] GetHisogram(Bitmap img)
         {
-            BitmapData data = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-            int[] histogram = new int[256];
+            var data = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            var histogram = new int[256];
             unsafe
             {
-                byte* ptr = (byte*)data.Scan0;
-                int remain = data.Stride - data.Width * 3;
-                for (int i = 0; i < histogram.Length; i++)
+                var ptr = (byte*)data.Scan0;
+                var remain = data.Stride - data.Width * 3;
+                for (var i = 0; i < histogram.Length; i++)
                     histogram[i] = 0;
-                for (int i = 0; i < data.Height; i++)
+                for (var i = 0; i < data.Height; i++)
                 {
-                    for (int j = 0; j < data.Width; j++)
+                    for (var j = 0; j < data.Width; j++)
                     {
-                        int mean = ptr[0] + ptr[1] + ptr[2];
-                        mean /= 3;
-                        histogram[mean]++;
+                        if (ptr != null)
+                        {
+                            var mean = ptr[0] + ptr[1] + ptr[2];
+                            mean /= 3;
+                            histogram[mean]++;
+                        }
                         ptr += 3;
                     }
                     ptr += remain;
@@ -88,44 +91,38 @@ namespace heredity_plus
             img.UnlockBits(data);
             return histogram;
         }
-        private float GetResult(int[] firstNum, int[] scondNum)
+        private float GetResult(IReadOnlyList<int> firstNum, IReadOnlyList<int> scondNum)
         {
-            if (firstNum.Length != scondNum.Length)
+            if (firstNum.Count != scondNum.Count)return 0;
+            float result = 0;
+            var j = firstNum.Count;
+            for (var i = 0; i < j; i++)
             {
-                return 0;
+                result += 1 - GetAbs(firstNum[i], scondNum[i]);
             }
-            else
-            {
-                float result = 0;
-                int j = firstNum.Length;
-                for (int i = 0; i < j; i++)
-                {
-                    result += 1 - GetAbs(firstNum[i], scondNum[i]);
-                }
-                return result / j;
-            }
+            return result / j;
         }
 
         public float Test(int[] tarh, Bitmap bmp, Target[,] tar)
         {
 
-            Bitmap bitmapt = new Bitmap(bmp, 256, 256);
-            float grade = (1 - GetResult(tarh, GetHisogram(bitmapt)))*10000;
+            var bitmapt = new Bitmap(bmp, 256, 256);
+            var grade = (1 - GetResult(tarh, GetHisogram(bitmapt)))*30000;
             float tempgrade = 0;
-            for (int x = 0; x < 64; x += 2)
+            for (var x = 0; x < 256; x += 8)
             {
 
-                for (int y = 0; y < 64; y += 2)
+                for (var y = 0; y < 256; y += 8)
                 {
                     lock (bmp)
                     {
-                        int R = bmp.GetPixel(x, y).R, G = bmp.GetPixel(x, y).G, B = bmp.GetPixel(x, y).B;
-                        if (R - tar[x, y].R < 0) tempgrade -= R - tar[x, y].R;
-                        else tempgrade += R - tar[x, y].R;
-                        if (G - tar[x, y].G < 0) tempgrade -= G - tar[x, y].G;
-                        else tempgrade += G - tar[x, y].G;
-                        if (B - tar[x, y].B < 0) tempgrade -= B - tar[x, y].B;
-                        else tempgrade += B - tar[x, y].B;
+                        int r = bitmapt.GetPixel(x, y).R, g = bitmapt.GetPixel(x, y).G, b = bitmapt.GetPixel(x, y).B;
+                        if (r - tar[x, y].R < 0) tempgrade -= r - tar[x, y].R;
+                        else tempgrade += r - tar[x, y].R;
+                        if (g - tar[x, y].G < 0) tempgrade -= g - tar[x, y].G;
+                        else tempgrade += g - tar[x, y].G;
+                        if (b - tar[x, y].B < 0) tempgrade -= b - tar[x, y].B;
+                        else tempgrade += b - tar[x, y].B;
                     }
                 }
             }
@@ -134,31 +131,27 @@ namespace heredity_plus
         }
         public void Queue(Member[] member)
         {
-            Member temp;
-            for (int i = 0; i < member.Length; i++)
+            for (var i = 0; i < member.Length; i++)
             {
-                for (int j = 0; j < member.Length - 1 - i; j++)
+                for (var j = 0; j < member.Length - 1 - i; j++)
                 {
-                    if (member[j].grade > member[j + 1].grade)
-                    {
-                        temp = member[j];
-                        member[j] = member[j + 1];
-                        member[j + 1] = temp;
-                    }
+                    if (!(member[j].Grade > member[j + 1].Grade)) continue;
+                    var temp = member[j];
+                    member[j] = member[j + 1];
+                    member[j + 1] = temp;
                 }
             }
         }
         public Bitmap DrawTriangles(Triangle[] triangle)
         {
-            Bitmap bitmap = new Bitmap(64, 64);
-            Graphics g;
-            g = Graphics.FromImage(bitmap);
+            var bitmap = new Bitmap(64, 64);
+            var g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
-            lock (obj)
+            lock (Obj)
             {
-                for (int i = 0; i < 100; i++)
+                for (var i = 0; i < 100; i++)
                 {
-                    g.FillPolygon(triangle[i].bsh, triangle[i].pols);
+                    g.FillPolygon(triangle[i].Bsh, triangle[i].Pols);
                 }
             }
             g.DrawImage(bitmap, 0, 0);
@@ -166,28 +159,28 @@ namespace heredity_plus
         }
         public void Multiply(Member[] member)
         {
-            for (int index = 1; index < 7; index++)
+            for (var index = 1; index < 7; index++)
             {
-                for (int i = 1; i < 15; i += 2)
+                for (var i = 1; i < 15; i += 2)
                 {
-                    for (int j = 0; j < 50; j++)
+                    for (var j = 0; j < 50; j++)
                     {
                         if (15 * index + i + 1 >= 100) break;
-                        member[15 * index + i].tri[j] = member[i].tri[j];
-                        member[15 * index + i].tri[50 + j] = member[i + 1].tri[50 + j];
-                        member[15 * index + i + 1].tri[j] = member[i + 1].tri[j];
-                        member[15 * index + i + 1].tri[50 + j] = member[i].tri[50 + j];
+                        member[15 * index + i].Tri[j] = member[i].Tri[j];
+                        member[15 * index + i].Tri[50 + j] = member[i + 1].Tri[50 + j];
+                        member[15 * index + i + 1].Tri[j] = member[i + 1].Tri[j];
+                        member[15 * index + i + 1].Tri[50 + j] = member[i].Tri[50 + j];
                     }
                 }
             }
         }
-        public void DifferentHandler(Member[] member, int num_offset, int times)
+        public void DifferentHandler(Member[] member, int numOffset, int times)
         {
-            for (int i = num_offset; i < 100; i++)
+            for (var i = numOffset; i < 100; i++)
             {
-                for (int j = 0; j < times; j++)
+                for (var j = 0; j < times; j++)
                 {
-                    member[i].tri[rans.Next(0, 100)] = DrawAnyTriangle();
+                    member[i].Tri[_rans.Next(0, 100)] = DrawAnyTriangle();
                 }
             }
         }
